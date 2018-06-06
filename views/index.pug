@@ -1,0 +1,436 @@
+extends layout
+
+block content
+  h1= title
+  p The following examples give a #{title}
+  //-----------------------------------------------------------------------
+  br
+  h3 Text Block Examples
+  
+  p
+    | This is a demonstration
+    | of Jade's text blocks
+
+  p.
+    This is a demo
+    of Jade's text blocks,
+    using the "." shorthand
+
+  p.
+    This is a <i>
+    demo</i> of Jade's <b>
+    text blocks</b>
+
+  p(id="hello") Hello World!
+
+  p(id="hello2", class="world2") We meet again...
+
+  p(class=['first-class', 'another-class', 'last-class']) This is a multiclass example.
+
+  // How to use this below?
+  p(data-myattr={numbers: [2, 4, 8], string: 'this is a string'})
+
+  // Not useful unless the object that you're passing has a custom .toString()
+  p(value=['one', 'two', 'three'])
+
+  //-----------------------------------------------------------------------
+  // Shorthands
+  br
+  h3 Using Shorthand Syntax Examples
+
+  // IDs and classes
+  p#hello3 Guten Morgen!
+  p#hello.world2 Gute Nacht.
+
+  // Automatic div
+  div#hello4 Hello World!
+
+  //-----------------------------------------------------------------------
+  // Comments
+  // a single line comment
+
+  //- a single line comment   --> doesn't show up in the compiled HTML
+
+  // a block comment
+    h1 Now I'm commented out.
+    p And me too
+
+  //
+    h1 I'm also commented out
+    p And me too
+
+  //-
+    h1 This is commented out
+    p as well as this
+
+  //-----------------------------------------------------------------------
+  // Block Expansion
+  // This lets us put tags on the same line
+  // The ':' after the tag name and attributes indicates that there 
+     is another tag following that one.
+  br
+  h3 Block Expansion Examples
+
+  //
+    ul
+      li.first
+        a(href='#') foo
+      li
+        a(href='#') bar
+      li.last
+        a(href='#') baz
+
+  ul
+    li.first: a(href='#') foo
+    li: a(href='#') bar
+    li.last: a(href='#') baz
+
+  // Don't do this, however, as this is very hard to read.
+  ul: li.first: b: a(href='#') foo
+
+  //-----------------------------------------------------------------------
+  // Doctypes
+
+  //
+    doctype
+    <!DOCTYPE html>
+    
+    doctype default
+    <!DOCTYPE html>
+    
+    doctype html
+    <!DOCTYPE html>
+    
+    doctype xml
+    <?xml version="1.0" encoding="utf-8" ?>
+    
+    doctype transitional
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    
+    doctype strict
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
+    www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    
+    doctype frameset
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+    
+    doctype 1.1
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.
+    w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+    
+    doctype basic
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://
+    www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">
+    
+    doctype mobile
+    <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" 
+    "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
+
+  //-----------------------------------------------------------------------
+  // Variables
+  br
+  h3 Variable Examples
+
+  - var some_text = "Hello There";
+
+  p Jade says #{some_text}
+
+  p 2 times 3 is #{2 * 3}
+
+  - base_url = "http://slang.cx"
+  a(href="#{base_url}/about") interpolation test
+
+  - i = ['proident', 'dreamcatcher', 'ennui', 'Tonx']
+  pre
+    | #{i[0]} #{i[1]} 
+    | #{i[2]} #{i[3]} 
+
+  // Don't do this, however
+  - mytag = "section"
+  #{mytag} Got some content in here 
+
+  //-----------------------------------------------------------------------
+  // Using variables without interpolation
+  br
+  h3 Using Variables w/o Interpolation Examples
+
+  - j = {"type": "text", "name": "Bob"}
+  input(type=j.type, value=j.name)
+
+  - content = "Richardson leggings Cosby sweater, pariatur locavore"
+  p= content
+
+  //-----------------------------------------------------------------------
+  // Escaping
+  br
+  h3 Escaping HTML Examples
+
+  - html_content = "Hello <em>World</em>"
+  p= html_content
+  p #{html_content}
+
+  p!= html_content
+  p !{html_content}
+
+  //-----------------------------------------------------------------------
+  // Logic in Templates
+  br
+  h3 Logic in Template Examples
+
+  // If/Else
+  - name = "Bob"
+
+  - if (name == "Bob") {
+    p Hello Bob
+  - } else {
+    p My name is #{name}
+  - }
+
+  // Shorthand If/Else
+  - greeting = (name == 'Bob' ? 'Hello' : 'My name is')
+  p #{greeting} #{name}
+
+  // For Loops
+  - list = ['one', 'two', 'three'];
+  ul
+    - for (var i = 0; i < list.length; i++) {
+      li=list[i]
+    - }
+
+  // Complex operation
+  - String.prototype.title_case = function() {
+  -   return this.replace(/\w\S*/g, function(txt) {
+  -     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  -   });
+  - };
+
+  p="this is a title".title_case()
+
+  //-----------------------------------------------------------------------
+  // Built-in logical operators
+  br
+  h3 Built-in Logical Operator Examples
+
+  // If / else / else if
+  - name2 = "Jerry"
+  if name == "Jerry"
+    p Hello Jerry
+  else if name == "Joe"
+    p Hello Joe
+  else
+    p My name is #{name2}
+
+  // Unless
+  - name3 = "Rob"
+  unless name == "Rob"
+    p My name is #{name3} 
+  else 
+    p Hello Rob
+
+  // Cases
+  - name4 = "Rick"
+  case name
+    when "Rick"
+      p Hi Rick!
+    when "Alice"
+      p Howdy Alice!
+    default
+      p Hello #{name4} 
+
+  // Each loops
+  - list2 = ["one", "two", "three"]
+  ul
+    each item in list2
+      li= item
+
+  - books = ["A", "B", "C"]
+
+  // Select Statements
+  select
+    each book, i in books
+      option(value=i) Book #{book}
+
+  - books2 = {"000": "A", "001": "B", "010": "C"}
+
+  select
+    each book, i in books2
+      option(value=i) Book #{book}
+
+  // While loops
+  - list3 = ["one", "two", "three"]
+  - i = 0
+
+  ul
+    while i < list3.length
+      li= list[i] 
+      - i++;
+
+  //-----------------------------------------------------------------------
+  // Defining mixins
+  br
+  h3 Mixin Examples
+
+  mixin book(name, price)
+    li #{name} for #{price} $
+
+  ul#books
+    +book("Book A", 12.99)
+    +book("Book B", 5.99)
+
+  mixin copyleft
+    | (&#596;) 
+
+  p
+    +copyleft
+    | - Sean Lang - 2013
+
+  // Passing blocks to mixins
+  mixin input(name)
+    li(id=name.replace(/\s/g, '-'))
+      label= name + ':'
+      block
+
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        form: ul
+          +input('favorite color')
+            input.form-control('type'='text')
+          +input('comments')
+            textarea.form-control Type your comment here.
+
+  // Using the JavaScript 'arguments' built-in object
+  mixin list()
+    ul
+      - var args = Array.prototype.slice.call(arguments);
+      for item in args
+        li= item
+
+  +list('one', 'two', 'three')
+
+  //-----------------------------------------------------------------------
+  // Registration Form Example
+  br
+  h3 Bootstrap Form Example
+
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h4.display-4.m-b-2 Sign Up
+
+        // register form
+        form(method='POST' action='/register')
+          div.form-group
+            label(for='name') Name:
+            input#name.form-control(type='text', placeholder='first and last' name='name')
+          div.form-group
+            label(for='email') Email:
+            input#email.form-control(type='email', placeholder='name@email.com' name='email')
+          div.form-group
+            label(for='favoriteBook') Favorite Book:
+            input#favoriteBook.form-control(type='text', placeholder='title of book' name='favoriteBook')
+          div.form-group
+            label(for='pw') Password:
+            input#pw.form-control(type='password' name='password')
+          div.form-group
+            label(for='pw2') Confirm Password:
+            input#pw2.form-control(type='password' name='confirmPassword')
+          //
+            div.form-group
+              label(for='rd1') Radio Button Example:
+                input#rd1.form-control(type='radio' name='radio' value='radio1')
+              label(for='rd2') Radio Button Example:
+                input#rd2.form-control(type='radio' name='radio' value='radio2')
+          div.form-group
+            label(for='rd1' class="radio-inline") Yes
+              input#rd1.form-control(type='radio' name='radio' value='normal')
+            label(for='rd2' class="radio-inline") No
+              input#rd2.form-control(type='radio' name='radio' value='high')
+          
+          div.form-group
+            label(for='chk')
+              label Yes
+                input#chk1.form-control(type='checkbox' name='checkbox1')
+              label No
+                input#chk2.form-control(type='checkbox' name='checkbox2')
+
+          button.btn.btn-primary(type='submit') Sign up
+
+  //-----------------------------------------------------------------------
+  // Radio
+  br
+  h3 Radio Button Example
+  div.span4#register_webinar
+    input(type='radio', name='register_webinar_', value='1')#wnr1
+    input(type='radio', name='register_webinar_', value='2')#wnr2
+    input(type='radio', name='register_webinar_', value='3')#wnr3
+    
+    label(for='wnr1')
+      i.yes
+      span.
+        Tuesday, May 13, 2014
+      br
+      small 1:00 to 1:45 PM CDT
+
+    label(for='wnr2')
+      i.yes
+      span.
+        Wednesday, May 14, 2014
+      br
+      small 8:00 to 8:45 AM CDT /  2:00 - 2:45 PM BST
+
+    label(for='wnr3')
+      i.yes
+      span.
+        Wednesday, May 21, 2014
+      br
+      small 1:00 to 1:45 PM CDT
+  
+  //-----------------------------------------------------------------------
+  // Dropdown Example
+  br
+  h3 Dropdown Example
+
+  li.dropdown.btn.btn-default
+    span.fas.fa-chevron-circle-down
+      |  Select 
+      span.caret
+    ul.dropdown-menu.dropdown-toggle(data-toggle="dropdown")
+      li
+        a(href="#") action
+      li 
+        a(href="#") another action
+
+  //-----------------------------------------------------------------------
+  // Bootstrap Navbar Example
+  br
+  h3 Bootstrap Navbar Example
+
+  nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    a.navbar-brand(href='#') Navbar
+      btn.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupport' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation') 
+        span.navbar-toggler-icon
+
+    div.collapse.navbar-collapse#navbarSupportContent
+      ul.navbar-nav.mr-auto
+        li.nav-item.active: a.nav-link(href='#') Home
+        li.nav-item: a.nav-link Link
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle#navbarDropdown(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+
+          div.dropdown-menu(aria-labelledby='navbarDropdown')
+            a.dropdown-item(href='#') Action
+            a.dropdown-item(href='#') Another action
+            div.dropdown-divider 
+            a.dropdown-item(href='#') Something else here
+      form.form-inline.my-2.my-lg-0 
+        input.form-control.mr-sm-2(type='search' placeholder='search' aria-label='Search')
+        btn.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+
+  //
+    ul
+      li.first: a(href='#') foo
+      li: a(href='#') bar
+      li.last: a(href='#') baz

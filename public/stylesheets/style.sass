@@ -1,0 +1,91 @@
+body
+  padding: 50px
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+
+a
+  color: #00B7FF
+
+.world2
+  color: #336699
+
+.last-class
+  color: grey
+
+.first-class
+  background-color: green
+
+.another-class
+  padding: 10px
+
+#hello4 
+  color: purple
+
+//-----------------------------------
+// Radio Example
+i.yes
+  display: none
+  padding: 0.1rem 0.3rem
+  border: 1px solid darken(#ffe, 10%)
+  backgroun-color: lighten(#ffe, 20%)
+  position: absolute
+  top: 1rem 
+  right: 1rem
+
+i.yes:after
+  content: 'Yes, I am attending.'
+  
+#yes
+  display: block
+
+#register_webinar 
+  input
+    display: inline-block
+  label
+    display: block
+    position: relative
+    margin: 0.67rem
+    padding: 0.67rem
+    background-color: #ffffee
+    border: 1px solid darken(adjust-hue(#ffe, -23deg), 15%)
+    transition: all 0.4s ease-in-out
+
+input#wnr1:checked 
+  &~ label[for='wnr1']
+    background-color: #eee!important
+    &> i.yes 
+      @extend #yes 
+
+input#wnr2:checked 
+  &~ label[for='wnr2']
+    background-color: #eee!important
+    &> i.yes 
+      @extend #yes 
+
+input#wnr3:checked 
+  &~ label[for='wnr3'] 
+    background-color: #eee!important
+    &> i.yes 
+      @extend #yes
+
+
+//-----------------------------------
+// Dropdown Example
+a 
+  color: black 
+  margin: 5px
+  text-decoration: none
+
+.dropdown-menu li:hover .sub-menu 
+  visibility: visible 
+
+.dropdown:hover .dropdown-menu 
+  display: block
+  margin-top: 0
+
+.dropdown-menu .sub-menu 
+  left: 100%
+  position: absolute
+  top: 0
+  visibility: hidden
+  margin-top: -1px
+  
